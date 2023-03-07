@@ -1,4 +1,4 @@
-import React from "react";
+import {useState, useEffect} from "react";
 
 import addButtonImg from '../images/add-button.svg';
 import profileUpdateAvatarButton from '../images/update-avatar-button.svg';
@@ -11,11 +11,11 @@ function Main({
   onAddPlace,
   onCardClick
 }) {
-  const [userData, setUserData] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [userData, setUserData] = useState({});
+  const [cards, setCards] = useState([]);
 
   //получаем данные пользователя и карточки с сервера
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getInitialItems(), api.getUserInfo()])
       .then(([initialItems, userData]) => {
         setUserData(userData);
