@@ -1,41 +1,29 @@
-import {useState, useEffect} from "react";
-
+import {useContext} from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import addButtonImg from '../images/add-button.svg';
 import profileUpdateAvatarButton from '../images/update-avatar-button.svg';
-import api from '../utils/Api';
 import Card from "./Card";
 
 function Main({
   onEditAvatar,
   onEditProfile,
   onAddPlace,
-  onCardClick
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  onCardDeleteClick,
+  cards
 }) {
-  const [userData, setUserData] = useState({});
-  const [cards, setCards] = useState([]);
 
-  //получаем данные пользователя и карточки с сервера
-  useEffect(() => {
-    Promise.all([api.getInitialItems(), api.getUserInfo()])
-      .then(([initialItems, userData]) => {
-        setUserData(userData);
-        setCards(initialItems);
-      })
-      .catch(error => console.log(`Ошибка: ${error}`));
-  }, [])
-
-  const userName = userData.name;
-  const userDescription = userData.about;
-  const userAvatar = userData.avatar;
-
-
+  const currentUser = useContext(CurrentUserContext);
+  
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
           <img
             className="profile__avatar"
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Аватар"
           />
           <img
@@ -46,14 +34,14 @@ function Main({
           />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button
             onClick={onEditProfile}
             type="button"
             aria-label="Редактировать профиль"
             className="profile__edit-button"
           />
-          <p className="profile__about">{userDescription}</p>
+          <p className="profile__about">{currentUser.about}</p>
         </div>
         <button
           onClick={onAddPlace}
@@ -76,6 +64,8 @@ function Main({
               key = {card._id}
               card = {card}
               onCardClick = {onCardClick}
+              onCardLike = {onCardLike}
+              onCardDeleteClick = {onCardDeleteClick}
             />
           );
         })}

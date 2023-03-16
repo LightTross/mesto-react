@@ -34,7 +34,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.username,
+        name: data.name,
         about: data.about
       })
     })
@@ -47,7 +47,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.title,
+        name: data.name,
         link: data.link
       })
     })
@@ -55,7 +55,7 @@ class Api {
   }
 
   //удаление элемента
-  deleteItem(itemId) {
+  deleteCard(itemId) {
     return fetch(`${this._baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
       headers: this._headers
@@ -63,19 +63,10 @@ class Api {
       .then(res => this._checkResponse(res));
   }
 
-  //постановка лайка
-  setLike(itemId) {
+  //постановка и снятие лайка
+  changeLikeCardStatus(itemId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-      .then(res => this._checkResponse(res));
-  }
-
-  //cнятие лайка
-  deleteLike(itemId) {
-    return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
-      method: 'DELETE',
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers
     })
       .then(res => this._checkResponse(res));
@@ -87,7 +78,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: user.avatarLink
+        avatar: user.avatar
       })
     })
       .then(res => this._checkResponse(res));
