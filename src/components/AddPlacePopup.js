@@ -18,7 +18,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading}) {
     if (!isOpen) {
       resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
 
 
   return (
