@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 import useFormAndValidation from '../utils/useFormAndValidation';
@@ -18,7 +18,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, onLoading}) {
     if (!isOpen) {
       resetForm();
     }
-  }, [currentUser, isOpen]);
+  }, [currentUser, isOpen, setValues, setIsValid, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();

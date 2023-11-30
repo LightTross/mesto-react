@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
